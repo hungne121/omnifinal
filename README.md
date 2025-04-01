@@ -1,6 +1,6 @@
 # OmniFinal Project
 
-Đây là dự án điều khiển robot omni, với mô phỏng trong Gazebo và hỗ trợ ROS1. Dự án này sử dụng các lệnh trong ROS để điều khiển robot và theo dõi dữ liệu IMU.
+Package báo cáo giữa kì omnifinal
 ### FIle PDF BAO CAO
 ## baocao_giuaki_ros.pdf
 
