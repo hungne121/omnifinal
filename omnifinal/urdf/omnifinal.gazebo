@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnifinal_gazebo">
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Gray</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="fl_link">
+    <material>Gazebo/Black</material>
+	<turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="fr_link">
+    <material>Gazebo/Black</material>
+	<turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="bl_link">
+    <material>Gazebo/Black</material>
+	<turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="br_link">
+    <material>Gazebo/Black</material>
+  <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="arm_link1">
+    <material>Gazebo/Gray</material>
+  <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <gazebo reference="arm_link2">
+    <material>Gazebo/Gray</material>
+  <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <!-- Camera sensor -->
+  <gazebo reference="camera_link">
+    <material>Gazebo/Red</material>
+    <sensor type="camera" name="camera1">
+      <update_rate>30.0</update_rate>
+      <camera name="head">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>800</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>30.0</updateRate>
+        <cameraName>omnirobot/camera1</cameraName>
+        <imageTopicName>/camera/image_raw</imageTopicName>
+        <cameraInfoTopicName>/camera/camera_info</cameraInfoTopicName>
+        <frameName>camera_link</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+ <!-- RpLidar using CPU -->
+   <gazebo reference="laser">
+    <material>Gazebo/Black</material>
+    <sensor type="ray" name="head_rplidar_sensor">
+      <visualize>true</visualize>
+      <update_rate>30.0</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>60</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.570796</min_angle>
+            <max_angle>1.570796</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>12.0</max>
+          <resolution>0.02</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_head_rplidar_controller" filename="libgazebo_ros_laser.so">
+        <topicName>scan</topicName>
+        <frameName>laser</frameName>
+      </plugin>
+    </sensor>
+  </gazebo> 
+  
+  <!-- IMU plugin -->
+  <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>base_link</bodyName>
+      <topicName>/imu/data</topicName>
+      <serviceName>/imu/service</serviceName>
+      <gaussianNoise>0.001</gaussianNoise>
+      <updateRate>50.0</updateRate>
+    </plugin>
+  </gazebo>
+
+  <!-- planar plugin-->
+  <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace></robotNamespace>
+    </plugin>
+  </gazebo>
+
+</robot>
