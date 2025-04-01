@@ -12,7 +12,8 @@ cd omnifinal
 ```
 
 ### 2. Chay mo phong
-```roslaunch omnifinal omnifinal.launch
+```bash
+roslaunch omnifinal omnifinal.launch
 ```
 ### 3. Chay dieu khien xe
 ```bash
