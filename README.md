@@ -12,9 +12,14 @@ cd omnifinal
 ```
 
 ### 2. Chay mo phong
-```roslaunch omnifinal omnifinal.launch```
+```roslaunch omnifinal omnifinal.launch
+```
 ### 3. Chay dieu khien xe
-```rosrun omnifinal omnifinal_tele```
+```bash
+rosrun omnifinal omnifinal_tele
+```
 ### 4. Xem topic cua imu
-```rostopic echo /imu/data```
+```bash
+rostopic echo /imu/data
+```
 
